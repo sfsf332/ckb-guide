@@ -1244,7 +1244,7 @@ unlockBtcTimeLock(
             </p>
             <div className={styles.imageContainer}>
            
-              <Image
+              <img
                 src={
                   "https://docs.nervos.org/img/how-ckb-works/structure-of-script.png"
                 }
