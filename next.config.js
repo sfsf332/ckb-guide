@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'docs.nervos.org',
+        pathname: '/**',
+      },
     ],
   },
 }
