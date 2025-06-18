@@ -9,10 +9,6 @@ export default function Home() {
           <header className={styles.header}>
             <h1 className={styles.title}>RGB++ Guide</h1>
             <div className={styles.metadata}>
-              <span className={styles.status}>
-                <div className={styles.statusDot}></div>
-                In progress
-              </span>
               <time>Last edited: June 16, 2025 3:43 PM</time>
             </div>
           </header>
@@ -50,11 +46,11 @@ export default function Home() {
             </p>
             <p>
               For more detailed information, please refer to the{" "}
-              <a href="https://github.com/RGBPlusPlus/RGBPlusPlus-design/blob/main/docs/light-paper-en.md">
+              <a href="https://talk.nervos.org/t/rgb-protocol-light-paper-translation/7790">
                 RGB++ Protocol Light Paper
               </a>{" "}
               or its{" "}
-              <a href="https://github.com/RGBPlusPlus/RGBPlusPlus-design/blob/main/docs/light-paper-cn.md">
+              <a href="https://talk.nervos.org/t/rgb-protocol-light-paper/7733">
                 Chinese version
               </a>
               .
@@ -121,7 +117,7 @@ export default function Home() {
               </li>
             </ul>
 
-            <h3>CKB Bitcoin SPV</h3>
+            <h4>CKB Bitcoin SPV</h4>
             <p>
               Light client implementation that enables CKB to verify Bitcoin
               transactions, providing a secure bridge between Bitcoin and CKB
@@ -212,7 +208,7 @@ export default function Home() {
               .
             </p>
 
-            <h3>Blockchain-enhanced State Validation</h3>
+            <h3>Blockchain-Enhanced State Validation</h3>
             <p>
               The concept of creating and managing assets on Bitcoin has been a
               long-standing pursuit in the cryptocurrency space. While Bitcoin's
@@ -390,6 +386,7 @@ export default function Home() {
             <p>The protocol implements two key contracts:</p>
             <ol>
               <li>
+              <code>RGBPP_lock</code>: A specialized contract that manages the unlocking mechanism for RGB++ Cells, ensuring secure and controlled access to the assets.
                 <div className={styles.code}>
                   <code>
                     {`
@@ -594,7 +591,6 @@ outputs:
             </p>
             <ol>
               <li>SPV Client Cell</li>
-              <li>
                 <ul>
                   <li>
                     A cell is identified as an SPV client cell if its type
@@ -604,7 +600,6 @@ outputs:
                     SPV client cells store the Bitcoin state. Each Bitcoin SPV
                     instance includes a minimum of three SPV client cells.
                   </li>
-                  <li>
                     <pre className={styles.code}>
                       <code>{`Client Cell:
     Type Script:
@@ -617,11 +612,9 @@ outputs:
         - btc headers mmr root
         - target adjust info`}</code>
                     </pre>
-                  </li>
                 </ul>
-              </li>
+
               <li>SPV Info Cell</li>
-              <li>
                 <ul>
                   <li>
                     The SPV info cell stores the basic information of the
@@ -631,7 +624,6 @@ outputs:
                   <li>
                     Each Bitcoin SPV instance contains only one SPV info cell.
                   </li>
-                  <li>
                     <pre className={styles.code}>
                       <code>
                         {`Info Cell:
@@ -643,9 +635,7 @@ outputs:
         - tip client cell id`}
                       </code>
                     </pre>
-                  </li>
                 </ul>
-              </li>
             </ol>
             <p>
               The SPV cells are initialized in a single transaction, resulting
@@ -718,9 +708,9 @@ outputs:
             <h3>btc-assets-api</h3>
             <p>
               This is a service that retrieves BTC/RGB++ information/assets and
-              processes transactions with these assets. Basically, it does the
-              following:
-            </p>
+              processes transactions with these assets. 
+              </p>
+            <p>Basically, it does the following:</p>
             <ol>
               <li>
                 Blockchain Information Retrieval: Access to Bitcoin chain data
@@ -969,37 +959,6 @@ transferUdt({
               For practical examples of RGB++ xUDT transfer, please refer to
               these transactions:
             </p>
-
-            <h4>Issuing a UDT</h4>
-            <p>Here's how to issue a new UDT using the RGB++ SDK:</p>
-            <pre className={styles.code}>
-              <code>{`import { RgbppClient } from '@ckb-devrel/rgbpp-sdk';
-
-async function issueUDT() {
-  const client = new RgbppClient(config);
-  
-  // Create UDT parameters
-  const udtParams = {
-    name: 'My RGB++ Token',
-    symbol: 'MRT',
-    decimals: 8,
-    totalSupply: '1000000000000000', // 10 million tokens
-    description: 'My first RGB++ token'
-  };
-
-  try {
-    // Issue the UDT
-    const result = await client.issueUDT(udtParams);
-    console.log('UDT issued successfully:', result);
-    
-    // Get the UDT ID
-    const udtId = result.udtId;
-    console.log('UDT ID:', udtId);
-  } catch (error) {
-    console.error('Failed to issue UDT:', error);
-  }
-}`}</code>
-            </pre>
             <ul>
               <li>
                 <a href="https://mempool.space/tx/505c74a073fc2cfab003b516e95fd0523dfa91e4f7ccca0c02db60c3cabd9383">
@@ -1012,6 +971,7 @@ async function issueUDT() {
                 </a>
               </li>
             </ul>
+
             <h4>Leap to CKB</h4>
             <p>
               The process of leaping xUDT from Bitcoin to CKB follows almost the
@@ -1069,23 +1029,10 @@ btcUdtToCkb({
 });`}</code>
             </pre>
 
-            <h4>Querying UDT Balance</h4>
-            <p>To check the balance of a UDT:</p>
-            <pre className={styles.code}>
-              <code>{`async function getUDTBalance() {
-  const client = new RgbppClient(config);
-  
-  try {
-    const balance = await client.getUDTBalance({
-      udtId: 'your-udt-id',
-      address: 'your-bitcoin-address'
-    });
-    console.log('UDT Balance:', balance);
-  } catch (error) {
-    console.error('Failed to get balance:', error);
-  }
-}`}</code>
-            </pre>
+            <p>
+              For practical examples of RGB++ xUDT leap, please refer to
+              these transactions:
+            </p>
             <ul>
               <li>
                 <a href="https://mempool.space/tx/76e0495834225675038fe4d90c826e3ab33058c9d921b1615eca234eff7eb125">
