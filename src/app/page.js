@@ -1,7 +1,12 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 
 export default function Home() {
+ 
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -285,11 +290,9 @@ export default function Home() {
               temporary substitute.
             </p>
             <p>The commitment is computed using the following formula:</p>
-            
-              <pre className="style.code">
-                <code>{`commitment = hash(CKB_TX_B | btc_utxo#1 | btc_utxo#2)`}</code>
-              </pre>
-            
+            <SyntaxHighlighter language="javascript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`commitment = hash(CKB_TX_B | btc_utxo#1 | btc_utxo#2)`}
+            </SyntaxHighlighter>
             <p>
               In practice, the <code>btc_utxo#1</code> and{" "}
               <code>btc_utxo#2</code> are encoded within the RGB++ Script
@@ -388,7 +391,7 @@ export default function Home() {
               <li>
               <code>RGBPP_lock</code>: A specialized contract that manages the unlocking mechanism for RGB++ Cells, ensuring secure and controlled access to the assets.
                 <div className={styles.code}>
-                  <code>
+                  <SyntaxHighlighter language="typescript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
                     {`
 RGBPP_lock: 
   code_hash: 
@@ -396,7 +399,7 @@ RGBPP_lock:
   args: 
     out_index | %bitcoin_tx%
                   `}
-                  </code>
+                  </SyntaxHighlighter>
                 </div>
                 <ul>
                   <li>
@@ -412,12 +415,12 @@ RGBPP_lock:
                 are transferred from Bitcoin Layer 1 to Layer 2, providing
                 additional security for cross-layer transactions.
                 <div className={styles.code}>
-                  <code>
+                  <SyntaxHighlighter language="bash" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
                     {`
 BTC_TIME_lock:
     args: lock_script | after | %new_bitcoin_tx%
                   `}
-                  </code>
+                  </SyntaxHighlighter>
                 </div>
                 <ul>
                   <li>
@@ -443,15 +446,15 @@ BTC_TIME_lock:
               following is the structure of the Config Cell:
             </p>
 
-            <pre className={styles.code}>
-              <code>{`struct RGBPPConfig {
+            <SyntaxHighlighter language="typescript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`struct RGBPPConfig {
   version: Uint16,
   // Type hash of bitcoin light client
   bitcoin_lc_type_hash: Byte32,
   // Type hash of bitcoin time lock contract
   bitcoin_time_lock_type_hash: Byte32,
-}`}</code>
-            </pre>
+}`}
+            </SyntaxHighlighter>
 
             <p>
               During contract deployment, the transaction outputs must include
@@ -460,8 +463,8 @@ BTC_TIME_lock:
               deployment transaction:
             </p>
 
-            <pre className={styles.code}>
-              <code>{`# BTC_TIME_lock
+            <SyntaxHighlighter language="bash" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`# BTC_TIME_lock
 inputs: any cells
 outputs:
   BTC_TIME_lock code cell
@@ -473,8 +476,8 @@ inputs: any cells
 outputs:
   RGBPP_lock code cell
   rgb_lock_config cell
-# ...`}</code>
-            </pre>
+# ...`}
+            </SyntaxHighlighter>
 
             <p>The configuration cell is loaded using the following steps:</p>
 
@@ -600,8 +603,8 @@ outputs:
                     SPV client cells store the Bitcoin state. Each Bitcoin SPV
                     instance includes a minimum of three SPV client cells.
                   </li>
-                    <pre className={styles.code}>
-                      <code>{`Client Cell:
+                    <SyntaxHighlighter language="yaml" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+                      {`Client Cell:
     Type Script:
         code hash: "..."
         hash type: "type"
@@ -610,8 +613,8 @@ outputs:
         - id
         - btc tip block hash
         - btc headers mmr root
-        - target adjust info`}</code>
-                    </pre>
+        - target adjust info`}
+                    </SyntaxHighlighter>
                 </ul>
 
               <li>SPV Info Cell</li>
@@ -624,17 +627,15 @@ outputs:
                   <li>
                     Each Bitcoin SPV instance contains only one SPV info cell.
                   </li>
-                    <pre className={styles.code}>
-                      <code>
-                        {`Info Cell:
+                    <SyntaxHighlighter language="yaml" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+                      {`Info Cell:
     Type Script:
         code hash: "..."
         hash type: "type"
         args: "typeid + clients count + flags"
     Data:
         - tip client cell id`}
-                      </code>
-                    </pre>
+                    </SyntaxHighlighter>
                 </ul>
             </ol>
             <p>
@@ -805,8 +806,8 @@ outputs:
               completing the token issuance process.
             </p>
             <p>The following is the code for the issuance process.</p>
-            <pre className={styles.code}>
-              <code>{`async function issueUdt({
+            <SyntaxHighlighter language="javascript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`async function issueUdt({
   udtScriptInfo,
   utxoSeal,
 }: {
@@ -869,8 +870,8 @@ issueUdt({
     cellDep: (await ckbClient.getKnownScript(ccc.KnownScript.XUdt)).cellDeps[0]
       .cellDep,
   },
-});`}</code>
-            </pre>
+});`}
+            </SyntaxHighlighter>
             <p>
               For practical examples of RGB++ xUDT issuance, please refer to
               these transactions:
@@ -904,8 +905,8 @@ issueUdt({
               </li>
             </ul>
             <p>The following is the code for the transfer process.</p>
-            <pre className={styles.code}>
-              <code>{`async function transferUdt({
+            <SyntaxHighlighter language="javascript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`async function transferUdt({
   udtScriptInfo,
   receivers,
 }: {
@@ -953,8 +954,8 @@ transferUdt({
       to: "<receiver's BTC address>",
     },
   ],
-});`}</code>
-            </pre>
+});`}
+            </SyntaxHighlighter>
             <p>
               For practical examples of RGB++ xUDT transfer, please refer to
               these transactions:
@@ -980,8 +981,8 @@ transferUdt({
               <code>RGBPP_Lock</code> to <code>BTC_TIME_lock</code>.
             </p>
             <p>The following is the code for the leap process.</p>
-            <pre className={styles.code}>
-              <code>{`async function btcUdtToCkb({
+            <SyntaxHighlighter language="javascript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`async function btcUdtToCkb({
   udtScriptInfo,
   receivers,
 }: {
@@ -1026,8 +1027,8 @@ btcUdtToCkb({
       amount: "<amount of xUDT token to leap>",
     },
   ],
-});`}</code>
-            </pre>
+});`}
+            </SyntaxHighlighter>
 
             <p>
               For practical examples of RGB++ xUDT leap, please refer to
@@ -1055,8 +1056,8 @@ btcUdtToCkb({
               Notably, this process does not require any Bitcoin transaction.
             </p>
             <p>The following is the code for the unlocking process.</p>
-            <pre className={styles.code}>
-              <code>{`async function unlockBtcTimeLock(btcTimeLockArgs: string) {
+            <SyntaxHighlighter language="javascript" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`async function unlockBtcTimeLock(btcTimeLockArgs: string) {
   // ...
 
   const tx = ccc.Transaction.default();
@@ -1109,8 +1110,8 @@ btcUdtToCkb({
 
 unlockBtcTimeLock(
   "<btc time lock args>",
-)`}</code>
-            </pre>
+)`}
+            </SyntaxHighlighter>
             <p>
               For a practical example of unlocking the BTC_TIME_lock, please
               refer to this transaction:
@@ -1164,7 +1165,7 @@ unlockBtcTimeLock(
               arbitrary logic to guard and protect your Cells. You can think of
               it as smart contract.
             </p>
-            <p>There‘re two main types of Scripts:</p>
+            <p>There're two main types of Scripts:</p>
             <ul>
               <li>
                 <a href="https://docs.nervos.org/docs/tech-explanation/lock-script">
@@ -1249,11 +1250,11 @@ unlockBtcTimeLock(
               the <code>OP_RETURN</code> opcode followed by one or more data
               pushes.
             </p>
-            <pre className={styles.code}>
-              <code>{`OP_RETURN
+            <SyntaxHighlighter language="bash" style={oneDark} customStyle={{borderRadius:8, fontSize:'0.95em', margin:'1em 0'}}>
+              {`OP_RETURN
 OP_PUSHBYTES_11
-68656c6c6f20776f726c64`}</code>
-            </pre>
+68656c6c6f20776f726c64`}
+            </SyntaxHighlighter>
             <p>
               The standard <code>OP_RETURN</code> script has a maximum size
               limit of 83 bytes. However, there is an ongoing discussion and
