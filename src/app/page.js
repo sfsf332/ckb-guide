@@ -20,7 +20,7 @@ export default function Home() {
 
           <section className={styles.section}>
             <h2>Introduction</h2>
-            <h3>What is RGB++?</h3>
+            <h3>What is RGB++</h3>
             <p>
               The RGB++ Protocol is a simple protocol that enhances Bitcoin
               Layer 1 programmability by establishing a binding between Bitcoin
@@ -45,9 +45,7 @@ export default function Home() {
               database for assets and as an off-chain pre-settlement layer.
             </p>
             <p>
-              With RGB++ Protocol, users can seamlessly issue Layer 2 assets on
-              CKB and transfer them between Bitcoin and CKB networks, combining
-              Bitcoin's security with CKB's programmability.
+              RGB++ Protocol bridges Bitcoin's security with CKB's programmability, enabling sophisticated applications directly on Bitcoin. Developers can now create advanced smart contracts that power decentralized applications, from IDO platforms to liquid staking pools, and more.
             </p>
             <p>
               For more detailed information, please refer to the{" "}
